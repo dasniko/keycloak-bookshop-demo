@@ -20,7 +20,7 @@
 </header>
 <main>
     <section>
-        <form th:action="@{/checkout}" method="post" style="text-align: right">
+        <form th:action="@{/checkout}" method="post">
             <table>
                 <thead>
                 <tr>
@@ -37,8 +37,9 @@
                     </tr>
                 </tbody>
             </table>
-            <br/>
-            <button type="submit">Checkout</button>
+            <div style="text-align: right">
+                <button type="submit">Checkout</button>
+            </div>
         </form>
     </section>
 </main>
