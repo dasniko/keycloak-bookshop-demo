@@ -5,11 +5,15 @@ pom.xml.releaseBackup
 pom.xml.versionsBackup
 release.properties
 
-# Eclipse
+# Eclipse / STS
 .project
 .classpath
 .settings/
 bin/
+.apt_generated
+.settings
+.springBeans
+.sts4-cache
 
 # IntelliJ
 .idea
@@ -19,6 +23,12 @@ bin/
 
 # NetBeans
 nb-configuration.xml
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
 
 # Visual Studio Code
 .vscode

@@ -24,4 +24,8 @@ public class CartService {
         cart.put(username, books);
         return books.size();
     }
+
+    public void deleteCart(String username) {
+        cart.remove(username);
+    }
 }

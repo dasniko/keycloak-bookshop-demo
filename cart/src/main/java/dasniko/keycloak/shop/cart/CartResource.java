@@ -5,6 +5,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -41,6 +42,13 @@ public class CartResource {
         String username = accessToken.getName();
         List<Book> books = cartService.getCart(username);
         return Response.ok(books).build();
+    }
+
+    @DELETE
+    public Response deleteCart() {
+        String username = accessToken.getName();
+        cartService.deleteCart(username);
+        return Response.noContent().build();
     }
 
 }
