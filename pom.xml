@@ -26,6 +26,7 @@
         <module>pim</module>
         <module>cart</module>
         <module>checkout</module>
+        <module>msgbroker</module>
     </modules>
 
 </project>
