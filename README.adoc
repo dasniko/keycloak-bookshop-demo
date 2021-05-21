@@ -1,0 +1,24 @@
+= Keycloak Bookshop Demo
+
+Demo application landscape to show various and different kinds of user- and client authentication with Keycloak in a distributed environment with web applications and services.
+
+== Description and Use Case
+
+It's kind of a web shop, selling books.
+
+Users can access the `shop` and the `checkout`, both are web apps.
+They have to authenticate themselves using their credentials with Keycloak and web apps using the _Authorization Code Flow_ to get the users access token via backchannel from the Keycloak server.
+The `shop` is a _Quarkus_ based application, using _Quarkus Extensions_, the `checkout` is a _Spring Boot_ based application, using _Spring Security_ and the _Keycloak Spring Security Adapter_.
+
+The `shop` gets its products from the `pim` (product information management) service, also a Quarkus based service, dealing with BearerOnly token validation.
+The `pim` only accepts tokens with the role `serviceAccount`, which regular users doesn't have, only the service accounts of the both web apps.
+
+The `cart` service (Quarkus based) stores the products a user wants to "buy".
+So, it has to be accessed in the context of the user, but users can't access it directly, that's why the web apps (both, `shop` _and_ `checkout`) have to _propagate_ the users access token to the `cart`.
+
+Finally, the `msgBroker` (Spring Boot based, using Spring Security dependencies only) service receives a message from the `checkout` web app, as soon a user made an order (e.g. to spread it to other consumers).
+Like the `pim`, the `msgBroker` is also only accessible for access tokens containing the `serviceAccount` role, which is again _NOT_ the user, but the service account of the `msgBroker` client.
+
+== Architectural Overview
+
+image:architecture.svg[]
