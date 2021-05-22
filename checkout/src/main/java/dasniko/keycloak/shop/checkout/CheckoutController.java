@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +40,12 @@ public class CheckoutController {
     @GetMapping("/")
     public String index() {
         return "redirect:/checkout";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) throws ServletException {
+        request.logout();
+        return String.format("redirect://%s:8081", request.getServerName());
     }
 
     @GetMapping("/checkout")
