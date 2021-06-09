@@ -748,7 +748,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "48d6698a-c787-427b-9aa3-80a3078d4568",
       "redirectUris": [
         "http://localhost:8084/*"
       ],
@@ -1065,7 +1065,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "08d171bf-ba03-44db-8279-f678d68021d7",
       "redirectUris": [
         "http://localhost:8081/*"
       ],
