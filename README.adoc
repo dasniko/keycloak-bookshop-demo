@@ -22,3 +22,14 @@ Like the `pim`, the `msgBroker` is also only accessible for access tokens contai
 == Architectural Overview
 
 image:architecture.svg[]
+
+== Docker Image
+
+There is a public Docker image available with this distributed bookshop example.
+Simply pull the image from the official Docker Hub:
+
+  $ docker pull dasniko/keycloak-bookshop-demo:latest
+
+The configuration of the apps and services in the Docker image is aligned with the link:./bookshop-realm.json[`bookshop-realm.json`] realm JSON export available here in the repository root.
+
+The apps and services expect Keycloak to be available under hostname/port `http://keycloak:8080`.

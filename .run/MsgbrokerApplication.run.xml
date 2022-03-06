@@ -1,9 +1,13 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="MsgbrokerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="msgbroker" />
+    <module name="keycloak-bookshop-demo-msgbroker" />
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
     <option name="SPRING_BOOT_MAIN_CLASS" value="dasniko.keycloak.shop.broker.MsgbrokerApplication" />
     <option name="ALTERNATIVE_JRE_PATH" />
-    <option name="SHORTEN_COMMAND_LINE" value="NONE" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

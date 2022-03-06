@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="pim" type="QuarkusRunConfigurationType" factoryName="Quarkus">
-    <module name="pim" />
+    <module name="keycloak-bookshop-demo-pim" />
     <QsMavenRunConfiguration>
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -11,7 +11,9 @@
               <set />
             </option>
             <option name="goals">
-              <list />
+              <list>
+                <option value="quarkus:dev" />
+              </list>
             </option>
             <option name="pomFileName" value="pom.xml" />
             <option name="profilesMap">
