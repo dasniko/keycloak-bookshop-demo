@@ -7,22 +7,21 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.5</version>
+        <version>2.7.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>dasniko</groupId>
     <artifactId>keycloak-bookshop-demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
-        <java.version>11</java.version>
-        <keycloak.version>17.0.0</keycloak.version>
+        <java.version>17</java.version>
         <maven-compiler.parameters>true</maven-compiler.parameters>
         <maven-compiler.version>3.8.1</maven-compiler.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <quarkus.version>2.7.3.Final</quarkus.version>
+        <quarkus.version>2.11.1.Final</quarkus.version>
     </properties>
 
     <dependencyManagement>

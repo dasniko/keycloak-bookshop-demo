@@ -1,6 +1,6 @@
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
 
-ARG JAVA_PACKAGE=java-11-openjdk-headless
+ARG JAVA_PACKAGE=java-17-openjdk-headless
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
 # Install java
 # Also set up permissions for user `1001`
@@ -16,11 +16,11 @@ RUN microdnf install curl ca-certificates ${JAVA_PACKAGE} \
 COPY ./docker/entrypoint.sh /deployments/entrypoint.sh
 RUN chmod +x /deployments/entrypoint.sh
 
-COPY ../shop/target/keycloak-bookshop-demo-shop-0.0.1-SNAPSHOT-runner.jar /deployments/shop.jar
-COPY ../pim/target/keycloak-bookshop-demo-pim-0.0.1-SNAPSHOT-runner.jar /deployments/pim.jar
-COPY ../cart/target/keycloak-bookshop-demo-cart-0.0.1-SNAPSHOT-runner.jar /deployments/cart.jar
-COPY ../checkout/target/keycloak-bookshop-demo-checkout-0.0.1-SNAPSHOT.jar /deployments/checkout.jar
-COPY ../msgbroker/target/keycloak-bookshop-demo-msgbroker-0.0.1-SNAPSHOT.jar /deployments/msgbroker.jar
+COPY ../shop/target/keycloak-bookshop-demo-shop-0.0.2-SNAPSHOT-runner.jar /deployments/shop.jar
+COPY ../pim/target/keycloak-bookshop-demo-pim-0.0.2-SNAPSHOT-runner.jar /deployments/pim.jar
+COPY ../cart/target/keycloak-bookshop-demo-cart-0.0.2-SNAPSHOT-runner.jar /deployments/cart.jar
+COPY ../checkout/target/keycloak-bookshop-demo-checkout-0.0.2-SNAPSHOT.jar /deployments/checkout.jar
+COPY ../msgbroker/target/keycloak-bookshop-demo-msgbroker-0.0.2-SNAPSHOT.jar /deployments/msgbroker.jar
 
 EXPOSE 8081-8085
 USER 1001

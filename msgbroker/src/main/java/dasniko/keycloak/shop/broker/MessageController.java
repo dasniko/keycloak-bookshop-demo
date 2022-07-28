@@ -1,7 +1,6 @@
 package dasniko.keycloak.shop.broker;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -12,16 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Niko Köbler, https://www.n-k.de, @dasniko
  */
+@Slf4j
 @RestController
 public class MessageController {
 
-    Logger logger = LoggerFactory.getLogger(MessageController.class);
-
     @PostMapping(path = "/msg", consumes = MediaType.TEXT_PLAIN_VALUE)
     public void acceptMessage(@RequestBody String message, @AuthenticationPrincipal Jwt principal) {
-        logger.info("*".repeat(30 + message.length()));
-        logger.info("* {}: {}", principal.getClaimAsString("preferred_username"), message);
-        logger.info("*".repeat(30 + message.length()));
+        log.info("*".repeat(30 + message.length()));
+        log.info("* {}: {}", principal.getClaimAsString("preferred_username"), message);
+        log.info("*".repeat(30 + message.length()));
     }
 
 }
