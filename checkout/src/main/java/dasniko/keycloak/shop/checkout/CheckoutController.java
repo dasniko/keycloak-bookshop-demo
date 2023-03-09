@@ -62,7 +62,7 @@ public class CheckoutController {
     }
 
     private List<Book> getCart() {
-        return clientWebClient.get()
+        return userWebClient.get()
                 .uri(CART_URL)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Book>>() {})
