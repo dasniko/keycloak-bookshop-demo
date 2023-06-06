@@ -13,6 +13,8 @@ RUN microdnf install curl ca-certificates ${JAVA_PACKAGE} \
     && chown 1001:root /deployments \
     && echo "securerandom.source=file:/dev/urandom" >> /etc/alternatives/jre/conf/security/java.security
 
+COPY ./docker/wait-for-it.sh /usr/local/bin/wait-for-it.sh
+RUN chmod +x /usr/local/bin/wait-for-it.sh
 COPY ./docker/entrypoint.sh /deployments/entrypoint.sh
 RUN chmod +x /deployments/entrypoint.sh
 
@@ -25,4 +27,4 @@ COPY ../msgbroker/target/keycloak-bookshop-demo-msgbroker-0.0.1-SNAPSHOT.jar /de
 EXPOSE 8081-8085
 USER 1001
 
-ENTRYPOINT [ "/deployments/entrypoint.sh" ]
+CMD [ "/deployments/entrypoint.sh" ]
