@@ -14,7 +14,7 @@ import java.util.List;
  * @author Niko Köbler, https://www.n-k.de, @dasniko
  */
 @ApplicationScoped
-@RegisterRestClient
+@RegisterRestClient(configKey = "pim")
 @OidcClientFilter
 @Consumes(MediaType.APPLICATION_JSON)
 public interface PimClient {

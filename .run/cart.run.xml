@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="cart" type="QuarkusRunConfigurationType" factoryName="Quarkus">
     <module name="keycloak-bookshop-demo-cart" />
-    <QsMavenRunConfiguration>
+    <cart>
       <MavenSettings>
         <option name="myGeneralSettings" />
         <option name="myRunnerSettings" />
@@ -25,7 +25,8 @@
         </option>
       </MavenSettings>
       <targetMavenLocalRepo />
-    </QsMavenRunConfiguration>
+      <emulateTerminal>true</emulateTerminal>
+    </cart>
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

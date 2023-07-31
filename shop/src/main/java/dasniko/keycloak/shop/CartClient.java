@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * @author Niko Köbler, https://www.n-k.de, @dasniko
  */
-@RegisterRestClient
+@RegisterRestClient(configKey = "cart")
 @Path("/cart")
 @AccessToken
 @Consumes(MediaType.APPLICATION_JSON)

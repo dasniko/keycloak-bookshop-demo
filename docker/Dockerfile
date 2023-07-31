@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8
 
 ARG JAVA_PACKAGE=java-17-openjdk-headless
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
