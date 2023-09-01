@@ -1,83 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Smiling Bookshop</title>
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
-    <style>
-        body {
-            --color: #118bee;
-            --color-accent: #118bee15;
-            --color-bg: #fff;
-            --color-bg-secondary: #e9e9e9;
-            --color-link: #118bee;
-            --color-secondary: #920de9;
-            --color-secondary-accent: #920de90b;
-            --color-shadow: #f4f4f4;
-            --color-table: #118bee;
-            --color-text: #000;
-            --color-text-secondary: #999;
-        }
-    </style>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<title>Smiling Bookshop</title>
+	<link rel="stylesheet" href="https://unpkg.com/mvp.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <img src="/smile.jpg" style="height: 70px" alt="">
-            <h1>Smiling Bookshop</h1>
-            <ul>
-                <li><a href="//localhost:3000">Cart/Checkout (<span id="cartSize">{cartSize}</span>)</a></li>
-                <li>{user}</li>
-                <li><a href="/logout">Logout</a></li>
-            </ul>
-        </nav>
-        <h1><i>Make your choice from the best books ever!</i></h1>
-    </header>
-    <main>
-        <section>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#for book in books}
-                        <tr>
-                            <td>{book.id}</td>
-                            <td>{book.title}</td>
-                            <td>{book.author}</td>
-                            <td>
-                                <a href="#" onclick="addToCart({ id: {book.id}, title: '{book.title}', author: '{book.author}'})"><i>🛒</i></a>
-                            </td>
-                        </tr>
-                    {/for}
-                </tbody>
-            </table>
-        </section>
-    </main>
-    <footer>
-        <hr/>
-        <p>
-            <small>&copy; Niko Köbler | <a href="http://keycloak-experte.de" target="_blank">keycloak-experte.de</a></small>
-        </p>
-    </footer>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<header>
+	<nav>
+		<img src="/smile.jpg" style="height: 70px" alt="">
+		<h1>Smiling Bookshop</h1>
+		<ul>
+			<li><a href="//localhost:3000">Cart/Checkout (<span id="cartSize">{cartSize}</span>)</a></li>
+			<li>{user}</li>
+			<li><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+	<h1><i>Make your choice from the best books ever!</i></h1>
+</header>
+<main>
+	<section>
+		<table>
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>Title</th>
+				<th>Author</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			{#for book in books}
+				<tr>
+					<td>{book.id}</td>
+					<td>{book.title}</td>
+					<td>{book.author}</td>
+					<td>
+						<a href="#" onclick="addToCart({ id: {book.id}, title: '{book.title}', author: '{book.author}'})">🛒</a>
+					</td>
+				</tr>
+			{/for}
+			</tbody>
+		</table>
+	</section>
+</main>
+<footer>
+	<hr/>
+	<p>
+		<small>&copy; Niko Köbler | <a href="http://keycloak-experte.de" target="_blank">keycloak-experte.de</a></small>
+	</p>
+</footer>
 <script>
-    const addToCart = (book) => {
-        $.ajax({
-            url: '/shop',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(book),
-        }).done((resp) => {
-            $('#cartSize').text(resp.size)
-        });
-    }
+	const addToCart = (book) => {
+		fetch('/shop', {
+			method: 'POST',
+			headers: new Headers({ 'Content-Type': 'application/json' }),
+			body: JSON.stringify(book),
+		})
+			.then((resp) => resp.json())
+			.then((data) => {
+				document.getElementById('cartSize').innerText = data.size;
+			})
+	}
 </script>
 </body>
 </html>
