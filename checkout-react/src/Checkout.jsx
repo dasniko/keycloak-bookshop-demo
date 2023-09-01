@@ -25,6 +25,7 @@ const Checkout = ({ kc }) => {
 				<nav>
 					<img src="/smile.jpg" style={{ height: 70 }} alt="Smile"/>
 					<h1>Smiling Bookshop Checkout</h1>
+					{document.cookie.includes('showStepUp') && (
 					<ul>
 						<li>ACR: {kc.tokenParsed?.acr}</li>
 						<li>
@@ -33,6 +34,7 @@ const Checkout = ({ kc }) => {
 							)}
 						</li>
 					</ul>
+					)}
 					<ul>
 						<li><a href="//localhost:8081/shop">Back to shop</a></li>
 						<li>{kc.tokenParsed?.preferred_username}</li>
