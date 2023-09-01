@@ -33,7 +33,6 @@
         <module>shop</module>
         <module>pim</module>
         <module>cart</module>
-
         <module>checkout-react</module>
     </modules>
 
