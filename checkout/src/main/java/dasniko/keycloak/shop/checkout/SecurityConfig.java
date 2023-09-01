@@ -7,7 +7,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceReactiveOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.InMemoryReactiveOAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientProvider;
+import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -104,11 +109,25 @@ public class SecurityConfig {
                 .build();
     }
 
+    @Bean
+    public ReactiveOAuth2AuthorizedClientManager authorizedClientManager(ReactiveClientRegistrationRepository clientRegistrationRepository,
+                                                                         ReactiveClientRegistrationRepository clientRegistrations) {
+        ReactiveOAuth2AuthorizedClientService authorizedClientService = new InMemoryReactiveOAuth2AuthorizedClientService(clientRegistrations);
+        ReactiveOAuth2AuthorizedClientProvider authorizedClientProvider =
+                ReactiveOAuth2AuthorizedClientProviderBuilder.builder().clientCredentials().build();
+        AuthorizedClientServiceReactiveOAuth2AuthorizedClientManager authorizedClientManager =
+                new AuthorizedClientServiceReactiveOAuth2AuthorizedClientManager(clientRegistrationRepository, authorizedClientService);
+        authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
+        return authorizedClientManager;
+    }
+
     @Bean(USER_WEBCLIENT)
     WebClient userWebClient(@Value("${app.registration.name}") String registrationName,
+                            ReactiveOAuth2AuthorizedClientManager authorizedClientManager,
                             ReactiveClientRegistrationRepository clientRegistrations,
                             ServerOAuth2AuthorizedClientRepository authorizedClients) {
-        var oauth = new ServerOAuth2AuthorizedClientExchangeFilterFunction(clientRegistrations, authorizedClients);
+//        var oauth = new ServerOAuth2AuthorizedClientExchangeFilterFunction(clientRegistrations, authorizedClients);
+        var oauth = new ServerOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
         oauth.setDefaultOAuth2AuthorizedClient(true);
         oauth.setDefaultClientRegistrationId(registrationName);
 
