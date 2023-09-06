@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Footer from "./Footer";
 
 const Checkout = ({ kc }) => {
 
@@ -25,16 +26,6 @@ const Checkout = ({ kc }) => {
 				<nav>
 					<img src="/smile.jpg" style={{ height: 70 }} alt="Smile"/>
 					<h1>Smiling Bookshop Checkout</h1>
-					{document.cookie.includes('showStepUp') && (
-					<ul>
-						<li>ACR: {kc.tokenParsed?.acr}</li>
-						<li>
-							{kc.tokenParsed?.acr !== 'gold' && (
-								<a href="#" onClick={() => kc.login({ acr: { values: ['gold'], essential: true } })}>Step-Up (Gold)</a>
-							)}
-						</li>
-					</ul>
-					)}
 					<ul>
 						<li><a href="//localhost:8081/shop">Back to shop</a></li>
 						<li>{kc.tokenParsed?.preferred_username}</li>
@@ -74,12 +65,7 @@ const Checkout = ({ kc }) => {
 					)}
 				</section>
 			</main>
-			<footer>
-				<hr/>
-				<p>
-					<small>&copy; Niko Köbler | <a href="http://keycloak-experte.de" target="_blank">keycloak-experte.de</a></small>
-				</p>
-			</footer>
+			<Footer/>
 		</>
 	);
 }
