@@ -1,6 +1,6 @@
 import Footer from "./Footer";
 
-const StepUp = () => (
+const StepUp = ({ kc }) => (
 	<>
 		<header>
 			<nav>
