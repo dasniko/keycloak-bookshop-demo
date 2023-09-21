@@ -25,6 +25,14 @@ const StepUp = ({ kc }) => (
 					</a>
 				</aside>
 				)}
+				<aside style={{ width: '75%' }}>
+					<details>
+						<summary>Access Token</summary>
+						<p>
+							<pre><code>{JSON.stringify(kc.tokenParsed, null, 2)}</code></pre>
+						</p>
+					</details>
+				</aside>
 			</section>
 		</main>
 		<Footer/>
