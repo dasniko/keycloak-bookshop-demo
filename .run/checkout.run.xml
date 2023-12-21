@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Checkout React" type="js.build_tools.npm">
+  <configuration default="false" name="checkout" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/checkout/package.json" />
     <command value="run" />
     <scripts>
