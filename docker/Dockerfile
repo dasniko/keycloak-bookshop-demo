@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.9
 
 ARG JAVA_PACKAGE=java-17-openjdk-headless
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
@@ -14,9 +14,9 @@ RUN chmod +x /usr/local/bin/wait-for-it.sh
 COPY ./docker/entrypoint.sh /deployments/entrypoint.sh
 RUN chmod +x /deployments/entrypoint.sh
 
-COPY ../shop/target/keycloak-bookshop-demo-shop-0.0.2-SNAPSHOT-runner.jar /deployments/shop.jar
-COPY ../pim/target/keycloak-bookshop-demo-pim-0.0.2-SNAPSHOT-runner.jar /deployments/pim.jar
-COPY ../cart/target/keycloak-bookshop-demo-cart-0.0.2-SNAPSHOT-runner.jar /deployments/cart.jar
+COPY ../shop/target/shop-0.0.3-SNAPSHOT-runner.jar /deployments/shop.jar
+COPY ../pim/target/pim-0.0.3-SNAPSHOT-runner.jar /deployments/pim.jar
+COPY ../cart/target/cart-0.0.3-SNAPSHOT.jar /deployments/cart.jar
 COPY ../checkout/deployment/checkout.conf /etc/nginx/conf.d/default.conf
 COPY ../checkout/dist /usr/share/nginx/html
 
