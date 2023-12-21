@@ -1,32 +1,14 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="cart" type="QuarkusRunConfigurationType" factoryName="Quarkus">
-    <module name="keycloak-bookshop-demo-cart" />
-    <cart>
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list>
-                <option value="quarkus:dev" />
-              </list>
-            </option>
-            <option name="pomFileName" value="pom.xml" />
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$/cart" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <targetMavenLocalRepo />
-      <emulateTerminal>true</emulateTerminal>
-    </cart>
+  <configuration default="false" name="cart" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ALTERNATIVE_JRE_PATH" value="17" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <module name="cart" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="dasniko.keycloak.shop.cart.CartApplication" />
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

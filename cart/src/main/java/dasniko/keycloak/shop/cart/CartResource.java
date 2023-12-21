@@ -1,16 +1,15 @@
 package dasniko.keycloak.shop.cart;
 
-import jakarta.annotation.security.RolesAllowed;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -18,37 +17,34 @@ import java.util.Map;
 /**
  * @author Niko Köbler, https://www.n-k.de, @dasniko
  */
-@Path("cart")
-@Produces(MediaType.APPLICATION_JSON)
-@RolesAllowed("user")
+@RestController
+@RequestMapping(path = "cart", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CartResource {
 
-    @Inject
-    JsonWebToken accessToken;
+	private final CartService cartService;
 
-    @Inject
-    CartService cartService;
+	@Autowired
+	public CartResource(CartService cartService) {
+		this.cartService = cartService;
+	}
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addToCart(Book book) {
-        String username = accessToken.getName();
-        int size = cartService.addToCart(username, book);
-        return Response.ok(Map.of("size", size)).build();
-    }
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Integer> addToCart(@RequestBody Book book, @AuthenticationPrincipal Jwt jwt) {
+		String subject = jwt.getSubject();
+		int size = cartService.addToCart(subject, book);
+		return Map.of("size", size);
+	}
 
-    @GET
-    public Response getCart() {
-        String username = accessToken.getName();
-        List<Book> books = cartService.getCart(username);
-        return Response.ok(books).build();
-    }
+	@GetMapping
+	public List<Book> getCart(@AuthenticationPrincipal Jwt jwt) {
+		String subject = jwt.getSubject();
+		return cartService.getCart(subject);
+	}
 
-    @DELETE
-    public Response deleteCart() {
-        String username = accessToken.getName();
-        cartService.deleteCart(username);
-        return Response.noContent().build();
-    }
+	@DeleteMapping
+	public void deleteCart(@AuthenticationPrincipal Jwt jwt) {
+		String subject = jwt.getSubject();
+		cartService.deleteCart(subject);
+	}
 
 }

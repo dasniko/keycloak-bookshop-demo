@@ -1,6 +1,6 @@
 package dasniko.keycloak.shop.cart;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,23 +10,23 @@ import java.util.Map;
 /**
  * @author Niko Köbler, https://www.n-k.de, @dasniko
  */
-@ApplicationScoped
+@Service
 public class CartService {
 
     Map<String, List<Book>> cart = new HashMap<>();
 
-    List<Book> getCart(String username) {
-        return cart.getOrDefault(username, List.of());
+    List<Book> getCart(String userId) {
+        return cart.getOrDefault(userId, List.of());
     }
 
-    int addToCart(String username, Book book) {
-        List<Book> books = cart.getOrDefault(username, new ArrayList<>());
+    int addToCart(String userId, Book book) {
+        List<Book> books = cart.getOrDefault(userId, new ArrayList<>());
         books.add(book);
-        cart.put(username, books);
+        cart.put(userId, books);
         return books.size();
     }
 
-    public void deleteCart(String username) {
-        cart.remove(username);
+    public void deleteCart(String userId) {
+        cart.remove(userId);
     }
 }
