@@ -705,6 +705,7 @@
     "frontchannelLogout" : false,
     "protocol" : "openid-connect",
     "attributes" : {
+			"backchannel.logout.url": "http://bookshop:8081/back-channel-logout",
       "saml.assertion.signature" : "false",
       "saml.multivalued.roles" : "false",
       "saml.force.post.binding" : "false",
