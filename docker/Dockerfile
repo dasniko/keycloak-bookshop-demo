@@ -17,8 +17,8 @@ RUN chmod +x /deployments/entrypoint.sh
 COPY ../shop/target/keycloak-bookshop-demo-shop-0.0.2-SNAPSHOT-runner.jar /deployments/shop.jar
 COPY ../pim/target/keycloak-bookshop-demo-pim-0.0.2-SNAPSHOT-runner.jar /deployments/pim.jar
 COPY ../cart/target/keycloak-bookshop-demo-cart-0.0.2-SNAPSHOT-runner.jar /deployments/cart.jar
-COPY ../checkout-react/deployment/checkout.conf /etc/nginx/conf.d/default.conf
-COPY ../checkout-react/dist /usr/share/nginx/html
+COPY ../checkout/deployment/checkout.conf /etc/nginx/conf.d/default.conf
+COPY ../checkout/dist /usr/share/nginx/html
 
 EXPOSE 3000
 EXPOSE 8081-8083

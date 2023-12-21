@@ -29,12 +29,12 @@
         </dependencies>
     </dependencyManagement>
 
-    <modules>
-        <module>shop</module>
-        <module>pim</module>
-        <module>cart</module>
-        <module>checkout-react</module>
-    </modules>
+	<modules>
+		<module>shop</module>
+		<module>pim</module>
+		<module>cart</module>
+		<module>checkout</module>
+	</modules>
 
     <build>
         <pluginManagement>
