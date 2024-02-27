@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Footer from "./Footer";
 
 const Checkout = ({ kc }) => {
 
@@ -37,35 +36,42 @@ const Checkout = ({ kc }) => {
 			<main>
 				<section>
 					{books.length ? (
-					<form>
-						<table>
-							<thead>
-							<tr>
-								<th>ID</th>
-								<th>Title</th>
-								<th>Author</th>
-							</tr>
-							</thead>
-							<tbody>
-							{books.map((book) => (
-								<tr key={book.id}>
-									<td>{book.id}</td>
-									<td>{book.title}</td>
-									<td>{book.author}</td>
+						<form>
+							<table>
+								<thead>
+								<tr>
+									<th>ID</th>
+									<th>Title</th>
+									<th>Author</th>
 								</tr>
-							))}
-							</tbody>
-						</table>
-						<div style={{ textAlign: 'right' }}>
-							<button type="button" onClick={doCheckout}>Checkout</button>
-						</div>
-					</form>
+								</thead>
+								<tbody>
+								{books.map((book) => (
+									<tr key={book.id}>
+										<td>{book.id}</td>
+										<td>{book.title}</td>
+										<td>{book.author}</td>
+									</tr>
+								))}
+								</tbody>
+							</table>
+							<div style={{ textAlign: 'right' }}>
+								<button type="button" onClick={doCheckout}>Checkout</button>
+							</div>
+						</form>
 					) : (
-						<h2><em><mark>No items in cart!</mark></em></h2>
+						<h2><em>
+							<mark>No items in cart!</mark>
+						</em></h2>
 					)}
 				</section>
 			</main>
-			<Footer/>
+			<footer>
+				<hr/>
+				<p>
+					<small>&copy; Niko Köbler | <a href="http://keycloak-experte.de" target="_blank">keycloak-experte.de</a></small>
+				</p>
+			</footer>
 		</>
 	);
 }
