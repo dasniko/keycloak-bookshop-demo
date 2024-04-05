@@ -1,6 +1,6 @@
 package dasniko.keycloak.shop.pim;
 
-import jakarta.annotation.security.RolesAllowed;
+import io.quarkus.security.Authenticated;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -13,10 +13,10 @@ import java.util.List;
  */
 @Path("catalogue")
 @Produces(MediaType.APPLICATION_JSON)
+@Authenticated
 public class CatalogueResource {
 
     @GET
-    @RolesAllowed("serviceAccount")
     public List<Book> getBooks() {
         return List.of(
                 new Book(1, "Brave New World", "Aldous Huxley"),

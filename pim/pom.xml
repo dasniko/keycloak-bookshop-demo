@@ -6,10 +6,10 @@
     <parent>
         <groupId>dasniko</groupId>
         <artifactId>keycloak-bookshop-demo</artifactId>
-        <version>0.0.3-SNAPSHOT</version>
+        <version>0.0.5-SNAPSHOT</version>
     </parent>
     <artifactId>pim</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
