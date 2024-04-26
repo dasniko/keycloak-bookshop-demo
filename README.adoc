@@ -11,7 +11,6 @@ They have to authenticate themselves using their credentials with Keycloak and w
 The `shop` is a _Quarkus_ based application, using _Quarkus Extensions_, the `checkout` is a _React.JS_ based application, using the _keycloak-js JavaScript Adapter_.
 
 The `shop` gets its products from the `pim` (product information management) service, also a Quarkus based service, dealing with BearerOnly token validation.
-The `pim` only accepts tokens with the role `serviceAccount`, which regular users doesn't have, only the service account of the `shop` web apps.
 
 The `cart` service (Quarkus based) stores the products a user wants to "buy".
 So, it has to be accessed in the context of the user, but users can't access it directly, that's why the web apps (both, `shop` _and_ `checkout`) have to _propagate_ the users access token to the `cart`.
