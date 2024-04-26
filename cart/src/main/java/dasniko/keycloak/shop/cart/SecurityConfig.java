@@ -4,9 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -21,22 +18,12 @@ import java.util.Set;
 public class SecurityConfig {
 
 	@Bean
-	@SuppressWarnings("unchecked")
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 			.cors(corsConfig -> corsConfigurationSource())
-			.authorizeHttpRequests(authorize -> authorize.anyRequest().hasRole("user"))
+			.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
 			.oauth2ResourceServer(oauth2 -> oauth2
-				.jwt(jwtConfigurer -> jwtConfigurer
-					.jwtAuthenticationConverter(jwt -> {
-						List<String> roles = (List<String>) jwt.getClaimAsMap("realm_access").getOrDefault("roles", List.of());
-						SimpleAuthorityMapper authorityMapper = new SimpleAuthorityMapper();
-						Set<GrantedAuthority> authorities = authorityMapper.mapAuthorities(
-							roles.stream().map(SimpleGrantedAuthority::new).toList()
-						);
-						return new JwtAuthenticationToken(jwt, authorities);
-					})
-				)
+				.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwt -> new JwtAuthenticationToken(jwt, Set.of())))
 			);
 		return http.build();
 	}
