@@ -26,7 +26,7 @@ kc.init({
 	useNonce: true,
 	pkceMethod: 'S256',
 	enableLogging: true,
-	acrValues: document.cookie.split('; ').find((e) => e.startsWith('acr_values='))?.split('=')[1],
+	acrValues: window.sessionStorage.getItem('ACR'),
 })
 	.then((authenticated) => {
 		if (!authenticated) {
@@ -39,6 +39,9 @@ kc.init({
 
 
 window.setAcrValues = (acrValues) => {
-	document.cookie = `acr_values=${acrValues}${!acrValues ? ';max-age=-1' : ''}`;
-	console.log(`Set acr_values = '${acrValues}'`);
+	if (acrValues) {
+		window.sessionStorage.setItem('ACR', acrValues);
+	} else {
+		window.sessionStorage.removeItem("ACR");
+	}
 }
