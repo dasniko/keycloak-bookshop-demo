@@ -6,10 +6,10 @@
     <parent>
         <groupId>dasniko</groupId>
         <artifactId>keycloak-bookshop-demo</artifactId>
-        <version>0.0.6-SNAPSHOT</version>
+        <version>0.0.7-SNAPSHOT</version>
     </parent>
     <artifactId>shop</artifactId>
-    <version>0.0.6-SNAPSHOT</version>
+    <version>0.0.7-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -21,11 +21,11 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-oidc-client-filter</artifactId>
+            <artifactId>quarkus-resteasy-client-oidc-filter</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-oidc-token-propagation</artifactId>
+            <artifactId>quarkus-resteasy-client-oidc-token-propagation</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -33,7 +33,7 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-client</artifactId>
+            <artifactId>quarkus-resteasy-client</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

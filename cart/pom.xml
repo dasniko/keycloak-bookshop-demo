@@ -6,10 +6,10 @@
 	<parent>
 		<groupId>dasniko</groupId>
 		<artifactId>keycloak-bookshop-demo</artifactId>
-		<version>0.0.6-SNAPSHOT</version>
+		<version>0.0.7-SNAPSHOT</version>
 	</parent>
 	<artifactId>cart</artifactId>
-	<version>0.0.6-SNAPSHOT</version>
+	<version>0.0.7-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
