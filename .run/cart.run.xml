@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="cart" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <option name="ALTERNATIVE_JRE_PATH" value="17" />
+    <option name="ALTERNATIVE_JRE_PATH" value="21" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <module name="cart" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="dasniko.keycloak.shop.cart.CartApplication" />
