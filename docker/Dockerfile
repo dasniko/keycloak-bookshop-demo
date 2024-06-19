@@ -17,7 +17,7 @@ RUN chmod +x /deployments/entrypoint.sh
 COPY ../shop/target/shop-0.0.6-SNAPSHOT-runner.jar /deployments/shop.jar
 COPY ../pim/target/pim-0.0.6-SNAPSHOT-runner.jar /deployments/pim.jar
 COPY ../cart/target/cart-0.0.6-SNAPSHOT.jar /deployments/cart.jar
-COPY ../checkout/deployment/checkout.conf /etc/nginx/conf.d/default.conf
+COPY ../checkout/deployment/nginx.conf /etc/nginx/nginx.conf
 COPY ../checkout/dist /usr/share/nginx/html
 
 EXPOSE 3000
