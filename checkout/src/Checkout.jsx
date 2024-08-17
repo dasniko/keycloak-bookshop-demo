@@ -21,54 +21,50 @@ const Checkout = ({ kc }) => {
 
 	return (
 		<>
-			<header>
-				<nav>
-					<img src="/smile.jpg" style={{ height: 70 }} alt="Smile"/>
-					<h1>Smiling Bookshop Checkout</h1>
-					<ul>
-						<li><a href="//localhost:8081/shop">Back to shop</a></li>
-						<li>{kc.tokenParsed?.preferred_username}</li>
-						<li><a href="#" onClick={() => kc.logout()}>Logout</a></li>
-					</ul>
-				</nav>
-				<h1><i>Ready to checkout your order!?</i></h1>
+			<header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+				<a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+					<img src="/smile.jpg" className="me-3" style={{ width: 100 }} alt=""/>
+					<span className="fs-3 fw-semibold text-body-emphasis">Smiling Bookshop Checkout</span>
+				</a>
+				<ul className="nav nav-pills">
+					<li className="nav-item"><a href="//localhost:8081/shop" className="nav-link">Back to shop</a></li>
+					<li className="nav-item nav-link mx-3 text-body">{kc.tokenParsed?.preferred_username}</li>
+					<li className="nav-item"><a href="#" onClick={() => kc.logout()} className="nav-link">Logout</a></li>
+				</ul>
 			</header>
-			<main>
-				<section>
-					{books.length ? (
-						<form>
-							<table>
-								<thead>
-								<tr>
-									<th>ID</th>
-									<th>Title</th>
-									<th>Author</th>
+			<main className="mx-auto my-5" style={{ width: 600 }}>
+				<h2 className="my-5"><i>Ready to checkout your order!?</i></h2>
+				{books.length ? (
+					<form>
+						<table className="table">
+							<thead>
+							<tr>
+								<th>ID</th>
+								<th>Title</th>
+								<th>Author</th>
+							</tr>
+							</thead>
+							<tbody>
+							{books.map((book) => (
+								<tr key={book.id}>
+									<td>{book.id}</td>
+									<td>{book.title}</td>
+									<td>{book.author}</td>
 								</tr>
-								</thead>
-								<tbody>
-								{books.map((book) => (
-									<tr key={book.id}>
-										<td>{book.id}</td>
-										<td>{book.title}</td>
-										<td>{book.author}</td>
-									</tr>
-								))}
-								</tbody>
-							</table>
-							<div style={{ textAlign: 'right' }}>
-								<button type="button" onClick={doCheckout}>Checkout</button>
-							</div>
-						</form>
-					) : (
-						<h2><em>
-							<mark>No items in cart!</mark>
-						</em></h2>
-					)}
-				</section>
+							))}
+							</tbody>
+						</table>
+						<div style={{ textAlign: 'right' }}>
+							<button type="button" className="btn btn-danger" onClick={doCheckout}>Checkout</button>
+						</div>
+					</form>
+				) : (
+					<div className="badge text-bg-warning fs-5">No items in cart!</div>
+				)}
 			</main>
 			<footer>
 				<hr/>
-				<p>
+				<p className="text-muted">
 					<small>&copy; Niko Köbler | <a href="http://keycloak-experte.de" target="_blank">keycloak-experte.de</a></small>
 				</p>
 			</footer>

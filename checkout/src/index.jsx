@@ -2,6 +2,7 @@ import axios from "axios";
 import Keycloak from "keycloak-js";
 import { createRoot } from "react-dom/client";
 import Checkout from "./Checkout";
+import 'bootstrap/dist/css/bootstrap.css'
 
 const kc = new Keycloak('/keycloak.json');
 

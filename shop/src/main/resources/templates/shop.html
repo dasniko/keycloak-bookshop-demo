@@ -4,50 +4,52 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<title>Smiling Bookshop</title>
-	<link rel="stylesheet" href="https://unpkg.com/mvp.css">
+	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 </head>
-<body>
-<header>
-	<nav>
-		<img src="/smile.jpg" style="height: 70px" alt="">
-		<h1>Smiling Bookshop</h1>
-		<ul>
-			<li><a href="//localhost:3000">Cart/Checkout (<span id="cartSize">{cartSize}</span>)</a></li>
-			<li>{user}</li>
-			<li><a href="/logout">Logout</a></li>
-		</ul>
-	</nav>
-	<h1><i>Make your choice from the best books ever!</i></h1>
+<body class="container">
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+	<a href="/shop" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+		<img src="/smile.jpg" class="me-3" style="width: 100px" alt="">
+		<span class="fs-3 fw-semibold text-body-emphasis">Smiling Bookshop</span>
+	</a>
+	<ul class="nav nav-pills">
+		<li class="nav-item">
+			<a href="//localhost:3000" class="nav-link active position-relative">Cart/Checkout
+				<span id="cartSize" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{cartSize}</span>
+			</a>
+		</li>
+		<li class="nav-item nav-link mx-3 text-body">{user}</li>
+		<li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+	</ul>
 </header>
 <main>
-	<section>
-		<table>
-			<thead>
+	<h2 class="my-5"><i>Make your choice from the best books ever!</i></h2>
+	<table class="table table-hover">
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>Title</th>
+			<th>Author</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+		{#for book in books}
 			<tr>
-				<th>ID</th>
-				<th>Title</th>
-				<th>Author</th>
-				<th></th>
+				<td>{book.id}</td>
+				<td>{book.title}</td>
+				<td>{book.author}</td>
+				<td>
+					<a class="btn btn-sm btn-outline-secondary" title="Add to cart" href="#" onclick="addToCart({ id: {book.id}, title: '{book.title}', author: '{book.author}'})">🛒</a>
+				</td>
 			</tr>
-			</thead>
-			<tbody>
-			{#for book in books}
-				<tr>
-					<td>{book.id}</td>
-					<td>{book.title}</td>
-					<td>{book.author}</td>
-					<td>
-						<a href="#" onclick="addToCart({ id: {book.id}, title: '{book.title}', author: '{book.author}'})">🛒</a>
-					</td>
-				</tr>
-			{/for}
-			</tbody>
-		</table>
-	</section>
+		{/for}
+		</tbody>
+	</table>
 </main>
 <footer>
 	<hr/>
-	<p>
+	<p class="text-muted">
 		<small>&copy; Niko Köbler | <a href="http://keycloak-experte.de" target="_blank">keycloak-experte.de</a></small>
 	</p>
 </footer>
