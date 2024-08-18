@@ -14,9 +14,9 @@ RUN chmod +x /usr/local/bin/wait-for-it.sh
 COPY ./docker/entrypoint.sh /deployments/entrypoint.sh
 RUN chmod +x /deployments/entrypoint.sh
 
-COPY ../shop/target/shop-0.0.7-SNAPSHOT-runner.jar /deployments/shop.jar
-COPY ../pim/target/pim-0.0.7-SNAPSHOT-runner.jar /deployments/pim.jar
-COPY ../cart/target/cart-0.0.7-SNAPSHOT.jar /deployments/cart.jar
+COPY ../shop/target/shop-0.0.8-SNAPSHOT-runner.jar /deployments/shop.jar
+COPY ../pim/target/pim-0.0.8-SNAPSHOT-runner.jar /deployments/pim.jar
+COPY ../cart/target/cart-0.0.8-SNAPSHOT.jar /deployments/cart.jar
 COPY ../checkout/deployment/nginx.conf /etc/nginx/nginx.conf
 COPY ../checkout/dist /usr/share/nginx/html
 
