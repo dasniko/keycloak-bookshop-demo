@@ -1,5 +1,6 @@
 package dasniko.keycloak.shop;
 
+import io.quarkus.oidc.IdToken;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.security.Authenticated;
@@ -26,7 +27,8 @@ import java.util.Map;
 public class ShopResource {
 
     @Inject
-    JsonWebToken accessToken;
+		@IdToken
+    JsonWebToken idToken;
 
     @Inject
     @RestClient
@@ -40,7 +42,7 @@ public class ShopResource {
 
     @GET
     public TemplateInstance showProducts() {
-        String username = accessToken.getName();
+        String username = idToken.getName();
         List<Book> books = pimClient.getBooks();
         int cartSize = cartClient.getCart().size();
         return shop
