@@ -24,10 +24,9 @@ axios.interceptors.request.use((config) =>
 
 kc.init({
 	onLoad: 'login-required',
-	useNonce: true,
-	pkceMethod: 'S256',
 	enableLogging: true,
 	acrValues: window.sessionStorage.getItem('ACR'),
+	scope: window.sessionStorage.getItem('scope') || undefined,
 })
 	.then((authenticated) => {
 		if (!authenticated) {
@@ -44,5 +43,13 @@ window.setAcrValues = (acrValues) => {
 		window.sessionStorage.setItem('ACR', acrValues);
 	} else {
 		window.sessionStorage.removeItem("ACR");
+	}
+}
+
+window.setScope = (scope) => {
+	if (scope) {
+		window.sessionStorage.setItem("scope", scope);
+	} else {
+		window.sessionStorage.removeItem("scope")
 	}
 }
