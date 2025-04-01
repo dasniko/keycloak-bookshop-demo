@@ -42,7 +42,7 @@ public class ShopResource {
 
     @GET
     public TemplateInstance showProducts() {
-        String username = idToken.getName();
+        String username = idToken.getClaim("name");
         List<Book> books = pimClient.getBooks();
         int cartSize = cartClient.getCart().size();
         return shop

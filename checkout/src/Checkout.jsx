@@ -15,7 +15,7 @@ const Checkout = ({ kc }) => {
 
 	const doCheckout = () => {
 		window.alert('Thank you for your order!');
-		console.log(`User ${kc.tokenParsed?.preferred_username} just bought these books: ${books.map((b) => b.title).join(', ')}`);
+		console.log(`User ${kc.idTokenParsed?.preferred_username} just bought these books: ${books.map((b) => b.title).join(', ')}`);
 		axios.delete('/cart').then(() => setBooks([]));
 	};
 
@@ -28,7 +28,7 @@ const Checkout = ({ kc }) => {
 				</a>
 				<ul className="nav nav-pills">
 					<li className="nav-item"><a href="//localhost:8081/shop" className="nav-link">Back to shop</a></li>
-					<li className="nav-item nav-link mx-3 text-body">{kc.tokenParsed?.preferred_username}</li>
+					<li className="nav-item nav-link mx-3 text-body">{kc.idTokenParsed?.name}</li>
 					<li className="nav-item"><a href="#" onClick={() => kc.logout()} className="nav-link">Logout</a></li>
 				</ul>
 			</header>
