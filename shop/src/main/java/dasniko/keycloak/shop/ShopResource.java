@@ -4,12 +4,14 @@ import io.quarkus.oidc.IdToken;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.security.Authenticated;
+import io.vertx.core.http.HttpServerRequest;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -41,14 +43,15 @@ public class ShopResource {
     Template shop;
 
     @GET
-    public TemplateInstance showProducts() {
+    public TemplateInstance showProducts(@Context HttpServerRequest request) {
         String username = idToken.getClaim("name");
         List<Book> books = pimClient.getBooks();
         int cartSize = cartClient.getCart().size();
         return shop
-                .data("user", username)
-                .data("books", books)
-                .data("cartSize", cartSize);
+					.data("host", request.authority().host())
+					.data("user", username)
+					.data("books", books)
+					.data("cartSize", cartSize);
     }
 
     @POST

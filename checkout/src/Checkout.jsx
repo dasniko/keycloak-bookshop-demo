@@ -19,6 +19,10 @@ const Checkout = ({ kc }) => {
 		axios.delete('/cart').then(() => setBooks([]));
 	};
 
+	const getShopLink = () => {
+		return `//${window.location.hostname}:8081/shop`;
+	};
+
 	return (
 		<>
 			<header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -27,7 +31,7 @@ const Checkout = ({ kc }) => {
 					<span className="fs-3 fw-semibold text-body-emphasis">Smiling Bookshop Checkout</span>
 				</a>
 				<ul className="nav nav-pills">
-					<li className="nav-item"><a href="//localhost:8081/shop" className="nav-link">Back to shop</a></li>
+					<li className="nav-item"><a href={getShopLink()} className="nav-link">Back to shop</a></li>
 					<li className="nav-item nav-link mx-3 text-body">{kc.idTokenParsed?.name}</li>
 					<li className="nav-item"><a href="#" onClick={() => kc.logout()} className="nav-link">Logout</a></li>
 				</ul>
