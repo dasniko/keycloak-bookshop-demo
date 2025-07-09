@@ -1,5 +1,4 @@
 {
-	"id" : "bookshop",
 	"realm" : "bookshop",
 	"displayName" : "Bookshop Demo",
 	"displayNameHtml" : "<div class=\"logo-text\"><span>Bookshop Demo</span></div>",
@@ -11,7 +10,7 @@
 	"refreshTokenMaxReuse" : 0,
 	"clients" : [ {
 		"clientId" : "checkout",
-		"name": "Bookshop Checkout Application",
+		"name": "Bookshop Checkout",
 		"rootUrl": "http://localhost:3000",
 		"baseUrl": "http://localhost:3000",
 		"surrogateAuthRequired" : false,
@@ -40,7 +39,7 @@
 		"optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
 	}, {
 		"clientId" : "shop",
-		"name": "Bookshop Webshop Application",
+		"name": "Bookshop Webshop",
 		"rootUrl": "http://localhost:8081",
 		"baseUrl": "http://localhost:8081",
 		"surrogateAuthRequired" : false,
@@ -48,7 +47,7 @@
 		"alwaysDisplayInConsole" : false,
 		"clientAuthenticatorType" : "client-secret",
 		"secret" : "08d171bf-ba03-44db-8279-f678d68021d7",
-		"redirectUris" : [ "/shop", "http://keycloak:8081/shop" ],
+		"redirectUris" : [ "/shop" ],
 		"webOrigins" : [ ],
 		"notBefore" : 0,
 		"bearerOnly" : false,
@@ -81,16 +80,5 @@
 		"requiredActions": [],
 		"notBefore": 0,
 		"groups": []
-	} ],
-	"smtpServer" : {
-		"starttls" : "",
-		"auth" : "",
-		"port" : "1025",
-		"host" : "mail",
-		"from" : "bookshop@keycloak.local",
-		"ssl" : ""
-	},
-	"attributes" : {
-		"acr.loa.map" : "{\"bronze\":\"0\",\"silver\":\"1\",\"gold\":\"2\"}"
-	}
+	} ]
 }
