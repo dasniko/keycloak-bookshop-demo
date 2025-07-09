@@ -17,6 +17,7 @@ RUN chmod +x /deployments/entrypoint.sh
 COPY ../shop/target/shop-0.0.9-runner.jar /deployments/shop.jar
 COPY ../pim/target/pim-0.0.9-runner.jar /deployments/pim.jar
 COPY ../cart/target/cart-0.0.9.jar /deployments/cart.jar
+COPY ../checkout/.tls/ /etc/tls/
 COPY ../checkout/deployment/nginx.conf /etc/nginx/nginx.conf
 COPY ../checkout/dist /usr/share/nginx/html
 
