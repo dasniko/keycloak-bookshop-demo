@@ -4,12 +4,16 @@
 				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>dasniko</groupId>
-		<artifactId>keycloak-bookshop-demo</artifactId>
-		<version>0.0.9</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
+	<groupId>dasniko</groupId>
 	<artifactId>cart</artifactId>
 	<version>0.0.9</version>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -20,6 +24,7 @@
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>

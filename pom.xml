@@ -4,13 +4,6 @@
 				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-
 	<groupId>dasniko</groupId>
 	<artifactId>keycloak-bookshop-demo</artifactId>
 	<version>0.0.9</version>
@@ -19,9 +12,9 @@
 	<properties>
 		<java.version>21</java.version>
 		<maven-compiler.parameters>true</maven-compiler.parameters>
-		<maven-compiler.version>3.13.0</maven-compiler.version>
+		<maven-compiler.version>3.14.1</maven-compiler.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<quarkus.version>3.20.0</quarkus.version>
+		<quarkus.version>3.27.0</quarkus.version>
 	</properties>
 
 	<dependencyManagement>
