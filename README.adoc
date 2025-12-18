@@ -24,7 +24,7 @@ image:architecture.svg[]
 There is a public Docker image available with this distributed bookshop example.
 Simply pull the image from the official Docker Hub:
 
-  $ docker pull dasniko/bookshop:latest
+  $ docker pull ghcr.io/dasniko/keycloak-bookshop-demo:latest
 
 The configuration of the apps and services in the Docker image is aligned with the link:./bookshop-realm.json[`bookshop-realm.json`] realm JSON export available here in the repository root.
 
