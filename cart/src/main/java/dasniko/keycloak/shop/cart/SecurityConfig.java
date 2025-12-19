@@ -49,11 +49,12 @@ public class SecurityConfig {
 	@Bean
 	public JwtDecoder jwtDecoder(
 			@Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") String jwkSetUri,
+			@Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuerUri,
 			@Value("${spring.security.oauth2.resourceserver.jwt.audience}") String audience) {
 		NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
 
 		OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(audience);
-		OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(jwkSetUri.replace("/protocol/openid-connect/certs", ""));
+		OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuerUri);
 		OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<>(withIssuer, audienceValidator);
 
 		jwtDecoder.setJwtValidator(withAudience);
