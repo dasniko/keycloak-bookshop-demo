@@ -9,7 +9,7 @@ const kc = new Keycloak('/keycloak.json');
 
 // HTTP
 
-axios.defaults.baseURL = 'http://localhost:8083';
+axios.defaults.baseURL = 'https://localhost:8083';
 axios.interceptors.request.use((config) =>
 	kc.updateToken(5)
 		.then(() => {
