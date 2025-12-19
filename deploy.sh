@@ -1,5 +1,5 @@
 #!/bin/bash
-IMAGE=dasniko/bookshop
+IMAGE=ghcr.io/dasniko/keycloak-bookshop-demo
 TAG=0.0.10
 mvn clean package
 docker build --pull -t ${IMAGE}:${TAG} -f docker/Dockerfile .
