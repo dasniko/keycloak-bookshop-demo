@@ -1,18 +1,17 @@
 {
 	"realm" : "bookshop",
-	"displayName" : "Bookshop Demo",
-	"displayNameHtml" : "<div class=\"logo-text\"><span>Bookshop Demo</span></div>",
+	"displayName" : "🙂 Smiling Bookshop 📚",
 	"enabled" : true,
 	"registrationAllowed" : true,
 	"rememberMe" : true,
 	"resetPasswordAllowed" : true,
-	"revokeRefreshToken" : false,
+	"revokeRefreshToken" : true,
 	"refreshTokenMaxReuse" : 0,
 	"clients" : [ {
 		"clientId" : "checkout",
 		"name": "Bookshop Checkout",
-		"rootUrl": "http://localhost:3000",
-		"baseUrl": "http://localhost:3000",
+		"rootUrl": "https://localhost:3000",
+		"baseUrl": "/",
 		"surrogateAuthRequired" : false,
 		"enabled" : true,
 		"alwaysDisplayInConsole" : false,
@@ -38,16 +37,48 @@
 		"defaultClientScopes" : [ "web-origins", "acr", "profile", "roles", "email", "basic" ],
 		"optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
 	}, {
+		"clientId": "pim",
+		"name": "Product Information Management",
+		"rootUrl": "",
+		"adminUrl": "",
+		"baseUrl": "",
+		"enabled": true,
+		"redirectUris": [ "/*" ],
+		"webOrigins": [ "/*" ],
+		"bearerOnly": true,
+		"standardFlowEnabled": false,
+		"implicitFlowEnabled": false,
+		"directAccessGrantsEnabled": false,
+		"serviceAccountsEnabled": false,
+		"publicClient": true,
+		"protocol": "openid-connect"
+	}, {
+		"clientId": "cart",
+		"name": "Cart Service",
+		"rootUrl": "",
+		"adminUrl": "",
+		"baseUrl": "",
+		"enabled": true,
+		"redirectUris": [ "/*" ],
+		"webOrigins": [ "/*" ],
+		"bearerOnly": true,
+		"standardFlowEnabled": false,
+		"implicitFlowEnabled": false,
+		"directAccessGrantsEnabled": false,
+		"serviceAccountsEnabled": false,
+		"publicClient": true,
+		"protocol": "openid-connect"
+	}, {
 		"clientId" : "shop",
 		"name": "Bookshop Webshop",
-		"rootUrl": "http://localhost:8081",
-		"baseUrl": "http://localhost:8081",
+		"rootUrl": "https://localhost:8081",
+		"baseUrl": "/",
 		"surrogateAuthRequired" : false,
 		"enabled" : true,
 		"alwaysDisplayInConsole" : false,
 		"clientAuthenticatorType" : "client-secret",
 		"secret" : "08d171bf-ba03-44db-8279-f678d68021d7",
-		"redirectUris" : [ "/shop" ],
+		"redirectUris" : [ "/oidc/callback" ],
 		"webOrigins" : [ ],
 		"notBefore" : 0,
 		"bearerOnly" : false,
@@ -60,25 +91,87 @@
 		"frontchannelLogout" : false,
 		"protocol" : "openid-connect",
 		"attributes" : {
-			"backchannel.logout.url": "http://bookshop:8081/back-channel-logout",
+			"backchannel.logout.url": "https://bookshop:8081/backchannel-logout",
 			"post.logout.redirect.uris" : "/index.html",
 			"use.refresh.tokens" : "true",
 			"pkce.code.challenge.method" : "S256"
 		},
-		"fullScopeAllowed" : true,
-		"defaultClientScopes" : [ "web-origins", "acr", "profile", "roles", "email", "basic" ],
-		"optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
+		"fullScopeAllowed" : false,
+		"defaultClientScopes" : [ "web-origins", "service_account", "acr", "profile", "roles", "email", "basic" ],
+		"optionalClientScopes" : [ "address", "organization", "phone", "offline_access", "microprofile-jwt" ]
 	} ],
+	"roles": {
+		"realm": [
+			{
+				"name": "default-roles-bookshop",
+				"description": "${role_default-roles}",
+				"composite": true,
+				"composites": {
+					"client": {
+						"cart": [
+							"cart-access"
+						]
+					}
+				},
+				"clientRole": false
+			}
+		],
+		"client": {
+			"pim": [
+				{
+					"name": "pim-access",
+					"description": "",
+					"composite": false,
+					"clientRole": true
+				}
+			],
+			"cart": [
+				{
+					"name": "cart-access",
+					"description": "",
+					"composite": false,
+					"clientRole": true
+				}
+			]
+		}
+	},
+	"defaultRole": {
+		"name": "default-roles-bookshop",
+		"description": "${role_default-roles}",
+		"composite": true,
+		"clientRole": false
+	},
+	"clientScopeMappings": {
+		"pim": [
+			{
+				"client": "shop",
+				"roles": [
+					"pim-access"
+				]
+			}
+		],
+		"cart": [
+			{
+				"client": "shop",
+				"roles": [
+					"cart-access"
+				]
+			}
+		]
+	},
 	"users": [ {
-		"createdTimestamp": 0,
 		"username": "service-account-shop",
 		"enabled": true,
-		"totp": false,
 		"emailVerified": false,
 		"serviceAccountClientId": "shop",
 		"disableableCredentialTypes": [],
 		"requiredActions": [],
 		"notBefore": 0,
-		"groups": []
+		"groups": [],
+		"clientRoles": {
+			"pim": [
+				"pim-access"
+			]
+		}
 	} ]
 }
