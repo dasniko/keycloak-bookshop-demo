@@ -25,6 +25,9 @@ COPY ../checkout/.tls/ /etc/tls/
 COPY ../checkout/deployment/nginx.conf /etc/nginx/nginx.conf
 COPY ../checkout/dist /usr/share/nginx/html
 
+ENV QUARKUS_HTTP_SSL_CERTIFICATE_FILES="/etc/tls/localhost.crt"
+ENV QUARKUS_HTTP_SSL_CERTIFICATE_KEY_FILES="/etc/tls/localhost.key"
+
 EXPOSE 3000
 EXPOSE 8081-8083
 
