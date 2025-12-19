@@ -1,22 +1,26 @@
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.5
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.7
 
-ARG JAVA_PACKAGE=java-21-openjdk-headless
+ARG VERSION=0.0.10
+
+LABEL org.opencontainers.image.authors="Niko Köbler, https://www.n-k.de"
+LABEL org.opencontainers.image.title="Keycloak Bookshop Demo"
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.description="All-in-one demo container"
+
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
 # Install java and nginx
-RUN microdnf install ca-certificates ${JAVA_PACKAGE} nginx -y \
+RUN microdnf install ca-certificates java-21-openjdk-headless nginx -y \
     && microdnf update -y \
     && microdnf clean all -y \
     && mkdir /deployments \
     && echo "securerandom.source=file:/dev/urandom" >> /etc/alternatives/jre/conf/security/java.security
 
-COPY ./docker/wait-for-it.sh /usr/local/bin/wait-for-it.sh
-RUN chmod +x /usr/local/bin/wait-for-it.sh
-COPY ./docker/entrypoint.sh /deployments/entrypoint.sh
-RUN chmod +x /deployments/entrypoint.sh
+COPY --chmod=755 ./docker/wait-for-it.sh /usr/local/bin/
+COPY --chmod=755 ./docker/entrypoint.sh /deployments/
 
-COPY ../shop/target/shop-0.0.10-runner.jar /deployments/shop.jar
-COPY ../pim/target/pim-0.0.10-runner.jar /deployments/pim.jar
-COPY ../cart/target/cart-0.0.10.jar /deployments/cart.jar
+COPY ../shop/target/shop-${VERSION}-runner.jar /deployments/shop.jar
+COPY ../pim/target/pim-${VERSION}-runner.jar /deployments/pim.jar
+COPY ../cart/target/cart-${VERSION}.jar /deployments/cart.jar
 COPY ../checkout/.tls/ /etc/tls/
 COPY ../checkout/deployment/nginx.conf /etc/nginx/nginx.conf
 COPY ../checkout/dist /usr/share/nginx/html
