@@ -1,6 +1,6 @@
 FROM registry.access.redhat.com/ubi9/ubi-minimal:9.7
 
-ARG VERSION=0.0.10
+ARG VERSION=0.0.11
 
 LABEL org.opencontainers.image.authors="Niko Köbler, https://www.n-k.de"
 LABEL org.opencontainers.image.title="Keycloak Bookshop Demo"
