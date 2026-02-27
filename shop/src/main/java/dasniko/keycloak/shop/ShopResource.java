@@ -46,12 +46,14 @@ public class ShopResource {
     public TemplateInstance showProducts(@Context HttpServerRequest request) {
         String username = idToken.getClaim("name");
 				String picture = idToken.getClaim("picture");
+				String accountUrl = System.getenv("AUTH_SERVER_PUBLIC_URL") + "/account";
         List<Book> books = pimClient.getBooks();
         int cartSize = cartClient.getCart().size();
         return shop
 					.data("host", request.authority().host())
 					.data("user", username)
 					.data("picture", picture)
+					.data("accountUrl", accountUrl)
 					.data("books", books)
 					.data("cartSize", cartSize);
     }
