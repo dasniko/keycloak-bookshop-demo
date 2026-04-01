@@ -53,7 +53,7 @@ jobs:
       - name: Build and push Docker image
         if: github.ref == 'refs/heads/main'
         id: push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: docker/Dockerfile
