@@ -2,11 +2,11 @@ name: CI build and Docker publish
 
 on:
   workflow_dispatch: {}
-#  push:
-#    paths-ignore:
-#      - 'README.md'
-#      - 'pom.xml'
-#      - '.github/**'
+  push:
+    paths-ignore:
+      - 'README.md'
+      - 'pom.xml'
+      - '.github/**'
 
 jobs:
   build:
