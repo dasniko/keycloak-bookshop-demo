@@ -1,8 +1,15 @@
 package dasniko.keycloak.shop.cart;
 
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
+import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
+import org.apache.hc.client5.http.ssl.HostnameVerificationPolicy;
+import org.apache.hc.core5.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
@@ -14,10 +21,12 @@ import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.net.ssl.SSLContext;
 import java.util.List;
 import java.util.Set;
 
@@ -49,26 +58,43 @@ public class SecurityConfig {
 
 	@Bean
 	public JwtDecoder jwtDecoder(
-			@Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") String jwkSetUri,
-			@Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuerUri,
-			@Value("${spring.security.oauth2.resourceserver.jwt.audience}") String audience) {
+		@Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") String jwkSetUri,
+		@Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuerUri,
+		@Value("${spring.security.oauth2.resourceserver.jwt.audience}") String audience) throws Exception {
+
+		SSLContext sslContext = SSLContextBuilder.create()
+			.loadTrustMaterial((chain, authType) -> true)
+			.build();
+
+		DefaultClientTlsStrategy tlsStrategy = new DefaultClientTlsStrategy(
+			sslContext,
+			HostnameVerificationPolicy.CLIENT,
+			(hostname, session) -> true
+		);
+
+		CloseableHttpClient httpClient = HttpClients.custom()
+			.setConnectionManager(
+				PoolingHttpClientConnectionManagerBuilder.create()
+					.setTlsSocketStrategy(tlsStrategy)
+					.build()
+			).build();
+
+		RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
+
 		NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(jwkSetUri)
-				.jwsAlgorithms(algorithms -> {
-					// Support multiple signature algorithms dynamically
-					// RS256, RS384, RS512 (RSA with SHA-256, SHA-384, SHA-512)
-					algorithms.add(SignatureAlgorithm.RS256);
-					algorithms.add(SignatureAlgorithm.RS384);
-					algorithms.add(SignatureAlgorithm.RS512);
-					// PS256, PS384, PS512 (RSA-PSS with SHA-256, SHA-384, SHA-512)
-					algorithms.add(SignatureAlgorithm.PS256);
-					algorithms.add(SignatureAlgorithm.PS384);
-					algorithms.add(SignatureAlgorithm.PS512);
-					// ES256, ES384, ES512 (ECDSA with SHA-256, SHA-384, SHA-512)
-					algorithms.add(SignatureAlgorithm.ES256);
-					algorithms.add(SignatureAlgorithm.ES384);
-					algorithms.add(SignatureAlgorithm.ES512);
-				})
-				.build();
+			.restOperations(restTemplate) // <-- der entscheidende Zusatz
+			.jwsAlgorithms(algorithms -> {
+				algorithms.add(SignatureAlgorithm.RS256);
+				algorithms.add(SignatureAlgorithm.RS384);
+				algorithms.add(SignatureAlgorithm.RS512);
+				algorithms.add(SignatureAlgorithm.PS256);
+				algorithms.add(SignatureAlgorithm.PS384);
+				algorithms.add(SignatureAlgorithm.PS512);
+				algorithms.add(SignatureAlgorithm.ES256);
+				algorithms.add(SignatureAlgorithm.ES384);
+				algorithms.add(SignatureAlgorithm.ES512);
+			})
+			.build();
 
 		OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(audience);
 		OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuerUri);
