@@ -12,7 +12,7 @@
 
 	<groupId>dasniko</groupId>
 	<artifactId>cart</artifactId>
-	<version>0.0.12</version>
+	<version>0.0.13</version>
 
 	<dependencies>
 		<dependency>
