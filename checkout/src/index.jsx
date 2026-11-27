@@ -24,6 +24,7 @@ axios.interceptors.request.use((config) =>
 
 kc.init({
 	onLoad: 'login-required',
+	checkLoginIframe: window.BOOKSHOP_CONFIG?.checkLoginIframe ?? true,
 	enableLogging: true,
 	acrValues: window.sessionStorage.getItem('ACR'),
 	scope: window.sessionStorage.getItem('scope') || undefined,

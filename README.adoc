@@ -39,6 +39,9 @@ Without it, everything keeps running on HTTPS as before.
 The link:./.devcontainer/devcontainer.json[dev container] starts link:./docker-compose.codespaces.yml[`docker-compose.codespaces.yml`] via link:./.devcontainer/start.sh[`start.sh`].
 The script also sets the Keycloak clients `shop` and `checkout` to the Codespaces URLs and generates a random Keycloak admin password, stored in `.devcontainer/.kc-admin-password`.
 
+`CHECKOUT_CHECK_LOGIN_IFRAME=false` (default `true`) turns off the login status iframe of keycloak-js in the `checkout`.
+In Codespaces, a public port answers this iframe with GitHub's warning page, which can't be confirmed inside the iframe, so the `checkout` hangs unless the Keycloak URL was opened in the browser before.
+
 The browser calls Keycloak and the `cart` service cross-origin, so both ports have to be public:
 
   $ gh codespace ports visibility 8080:public 8083:public -c "$CODESPACE_NAME"
