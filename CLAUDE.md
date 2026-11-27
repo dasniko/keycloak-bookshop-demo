@@ -43,6 +43,16 @@ Cart security details (`cart/.../SecurityConfig.java`): a custom `NimbusJwtDecod
 
 Key env vars: `AUTH_SERVER_URL`, `AUTH_SERVER_PUBLIC_URL` (also used by shop for the account-console link), `SHOP_CLIENT_ID`, `SHOP_CLIENT_SECRET`, `PIM_AUDIENCE`, `CART_AUDIENCE`.
 
+## HTTP-only mode (GitHub Codespaces)
+
+HTTPS is the default. Setting `HTTP_ONLY=true` in the container makes `docker/entrypoint.sh` switch every app to plain HTTP: it activates the Quarkus profile `http` and the Spring profile `http`, unsets the TLS env vars from the Dockerfile, removes `ssl` from the nginx listener, and writes `config.js` and `keycloak.json` for checkout from `*_PUBLIC_URL`.
+- In Quarkus, the HTTPS settings are prefixed with `%dev,prod.`, so they stay off in the `http` profile. Don't move them back to unprefixed keys: the HTTPS listener would then also start in HTTP mode and clash on the ports.
+- In the `http` profile, shop builds its OIDC `redirect_uri` from `X-Forwarded-Host` or `Host` and forces the `https` scheme.
+- Browser-facing URLs are configurable instead of host:port: `bookshop.checkout-url` (shop → checkout link), and `window.BOOKSHOP_CONFIG` in `checkout/public/config.js` (`cartUrl`, `shopUrl`). Unset values fall back to the local HTTPS defaults.
+- The devcontainer image is pinned to `base:ubuntu-24.04`. Plain `base:ubuntu` resolves to 26.04, where docker-in-docker can't install Docker.
+- `.devcontainer/start.sh` runs `docker-compose.codespaces.yml`. It then sets `rootUrl` of the `shop` and `checkout` clients and shop's back-channel logout URL to the Codespaces URLs via `kcadm`, leaving `bookshop-realm.json` untouched. In Codespaces, ports 8080 and 8083 must be public, because the browser calls them cross-origin.
+- Codespaces proxy headers, measured with a header-echo server on 2026-11-27: `Host` is rewritten to `localhost:<port>`, but `X-Forwarded-Host` (public host), `X-Forwarded-Proto: https` and `X-Forwarded-Port: 443` are set. That is why shop's forwarded-host setting works. A same-origin `Origin` is rewritten to `http://localhost:<port>`; a foreign `Origin` (e.g. from the checkout port) is passed unchanged.
+
 ## Build / packaging layout
 
 - The root `pom.xml` is the parent of `shop`, `pim` and `checkout` and imports the Quarkus BOM (`quarkus.version`). `cart` is listed as a module but uses `spring-boot-starter-parent` as its parent, so Quarkus and root-pom settings do not apply to it.

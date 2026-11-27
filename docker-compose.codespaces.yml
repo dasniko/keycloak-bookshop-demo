@@ -1,0 +1,35 @@
+# HTTP-only setup for GitHub Codespaces: the Codespaces proxy terminates TLS
+# and exposes each port under https://<codespace>-<port>.<forwarding-domain>.
+# Started by .devcontainer/start.sh, which also provides KC_ADMIN_PASSWORD.
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev --import-realm
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD:?}
+      KC_HOSTNAME: https://${CODESPACE_NAME:?}-8080.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:?}
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./bookshop-realm.json:/opt/keycloak/data/import/bookshop-realm.json
+
+  bookshop:
+    image: ghcr.io/dasniko/keycloak-bookshop-demo:${BOOKSHOP_TAG:-0.0.12}
+    command: [ "wait-for-it.sh", "keycloak:8080", "--", "/deployments/entrypoint.sh" ]
+    environment:
+      HTTP_ONLY: "true"
+      WAITFORIT_TIMEOUT: "60"
+      AUTH_SERVER_URL: http://keycloak:8080/realms/bookshop
+      AUTH_SERVER_PUBLIC_URL: https://${CODESPACE_NAME}-8080.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/realms/bookshop
+      SHOP_PUBLIC_URL: https://${CODESPACE_NAME}-8081.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}
+      CHECKOUT_PUBLIC_URL: https://${CODESPACE_NAME}-3000.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}
+      CART_PUBLIC_URL: https://${CODESPACE_NAME}-8083.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}
+      SHOP_CLIENT_ID: shop
+      SHOP_CLIENT_SECRET: 28jNRzecdtvZCeIa9eLOHNYM4UayJdnV
+    ports:
+      - "3000:3000"
+      - "8081:8081"
+      - "8083:8083"

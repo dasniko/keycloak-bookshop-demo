@@ -14,11 +14,13 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Niko Köbler, https://www.n-k.de, @dasniko
@@ -42,6 +44,12 @@ public class ShopResource {
     @Inject
     Template shop;
 
+    /**
+     * Public URL of the checkout app. If not set, it is derived from the request host and port 3000.
+     */
+    @ConfigProperty(name = "bookshop.checkout-url")
+    Optional<String> checkoutUrl;
+
     @GET
     public TemplateInstance showProducts(@Context HttpServerRequest request) {
         String username = idToken.getClaim("name");
@@ -49,8 +57,9 @@ public class ShopResource {
 				String accountUrl = System.getenv("AUTH_SERVER_PUBLIC_URL") + "/account";
         List<Book> books = pimClient.getBooks();
         int cartSize = cartClient.getCart().size();
+        String host = request.authority().host();
         return shop
-					.data("host", request.authority().host())
+					.data("checkoutUrl", checkoutUrl.orElse("//" + host + ":3000"))
 					.data("user", username)
 					.data("picture", picture)
 					.data("accountUrl", accountUrl)

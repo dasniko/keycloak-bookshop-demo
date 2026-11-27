@@ -20,7 +20,8 @@ const Checkout = ({ kc }) => {
 	};
 
 	const getShopLink = () => {
-		return `//${window.location.hostname}:8081/shop`;
+		const shopUrl = window.BOOKSHOP_CONFIG?.shopUrl || `//${window.location.hostname}:8081`;
+		return `${shopUrl}/shop`;
 	};
 
 	return (
