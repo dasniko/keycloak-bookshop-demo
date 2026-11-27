@@ -77,7 +77,7 @@
 		"enabled" : true,
 		"alwaysDisplayInConsole" : false,
 		"clientAuthenticatorType" : "client-secret",
-		"secret" : "08d171bf-ba03-44db-8279-f678d68021d7",
+		"secret" : "28jNRzecdtvZCeIa9eLOHNYM4UayJdnV",
 		"redirectUris" : [ "/oidc/callback" ],
 		"webOrigins" : [ ],
 		"notBefore" : 0,
